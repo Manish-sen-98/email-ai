@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const emailRoutes = require('./route/emailRoutes');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,16 +13,9 @@ app.use(cors());
 app.use(express.json());
 
 app.get('*', (req, res) => 
-    res.sendFile(path.join(__dirname, '/client/dist/index.html'))
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
 );
 
-// Database Connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.error(err));
 
 // Routes
 app.use('/api', emailRoutes);
